@@ -4,7 +4,9 @@ class Inventory extends Component {
     state = {}
     render() {
         return (
-            <p></p>
+            <div className="inventory">
+                <p>Inventory</p>
+            </div>
         );
     }
 }

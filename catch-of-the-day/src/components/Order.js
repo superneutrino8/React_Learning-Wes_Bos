@@ -3,7 +3,11 @@ import React, { Component } from 'react'
 class Order extends Component {
     state = {}
     render() {
-        return (<p></p>);
+        return (
+            <div className="order">
+                <p>Order</p>
+            </div>
+        );
     }
 }
 

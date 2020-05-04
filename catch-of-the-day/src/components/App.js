@@ -4,11 +4,14 @@ import Header from './Header';
 import Inventory from './Inventory';
 import Order from './Order';
 
+import sampleFishes from '../sample-fishes';
+
 class App extends Component {
     state = {
         fishes: {},
         order: {}
     };
+    
     addFishes = (fish) => {
         console.log('INSIDE App.js');
         // 1. Create copy of state
@@ -20,6 +23,13 @@ class App extends Component {
             fishes: fishes,
         })
     };
+
+    loadFishes = (event) => {
+        this.setState({
+            fishes: sampleFishes
+        });
+    }
+
     render() {
         return (
             <div className="catch-of-the-day">
@@ -27,7 +37,7 @@ class App extends Component {
                     <Header tagline="Fresh Seafood Market" />
                 </div>
                 <Order />
-                <Inventory addFishes={this.addFishes} />
+                <Inventory addFishes={this.addFishes} loadFishes={this.loadFishes} />
             </div>
         );
     }

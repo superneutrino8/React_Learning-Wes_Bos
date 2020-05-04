@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 
 import './css/style.css';
 
-import StorePicker from './components/StorePicker';
-import App from './components/App';
+import Router from './components/Router';
 
-ReactDOM.render(<App/>, document.querySelector('#main'));
+ReactDOM.render(<Router />, document.querySelector('#main'));

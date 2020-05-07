@@ -10,7 +10,7 @@ class Order extends Component {
         const count = this.props.order[key];
         const isAvailable = fish && fish.status === 'available';
 
-        if(!fish) return null;
+        if (!fish) return null;
 
         if (!isAvailable) {
             return <li key={key}>
@@ -26,23 +26,27 @@ class Order extends Component {
     }
 
     render() {
-        const orderIDs = Object.keys(this.props.order);
-        const total = orderIDs.reduce((prevTotal, key) => {
-            const fish = this.props.fishes[key];
-            const count = this.props.order[key];
-            const isAvailable = fish && fish.status === 'available';
-            if (isAvailable) {
-                return (prevTotal + (count * fish.price));
-            }
-            else {
-                return prevTotal;
-            }
-        }, 0);
+        let orderIDs, total = 0;
+        const size = this.props.order === null ? 0 : 1;
+        if (size > 0) {
+            orderIDs = Object.keys(this.props.order);
+            total = orderIDs.reduce((prevTotal, key) => {
+                const fish = this.props.fishes[key];
+                const count = this.props.order[key];
+                const isAvailable = fish && fish.status === 'available';
+                if (isAvailable) {
+                    return (prevTotal + (count * fish.price));
+                }
+                else {
+                    return prevTotal;
+                }
+            }, 0);
+        }
         return (
             <div className="order-wrap">
                 <h2>Order</h2>
                 <ul className="order">
-                    {orderIDs.map(this.renderOder)}
+                    {size === 0 ? '' : orderIDs.map(this.renderOder)}
                 </ul>
                 <div className="total">
                     Total:

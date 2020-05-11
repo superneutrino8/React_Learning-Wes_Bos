@@ -1,6 +1,21 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+
 
 export class EditFishForm extends Component {
+
+    static propTypes = {
+        updateFish: PropTypes.func,
+        fish: PropTypes.shape({
+            image: PropTypes.string,
+            name: PropTypes.string,
+            price: PropTypes.number,
+            desc: PropTypes.string,
+            status: PropTypes.string
+        }),
+        index: PropTypes.string
+    }
+
     handleChange = (event) => {
         console.log(event.currentTarget);
 
@@ -15,6 +30,7 @@ export class EditFishForm extends Component {
 
         console.log(fish);
     }
+
     render() {
         return (
             <div className="fish-edit">

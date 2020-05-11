@@ -20,7 +20,7 @@ class App extends Component {
 
         const localStorageRef = localStorage.getItem(params.storeId);
 
-        if(localStorage) {
+        if (localStorage) {
             this.setState({
                 order: JSON.parse(localStorageRef)
             })
@@ -58,6 +58,15 @@ class App extends Component {
         });
     }
 
+    updateFish = (key, updatedFish) => {
+        // 1. Create copy of state
+        const fishes = { ...this.state.fishes };
+        // 2. Make changes in copy
+        fishes[key] = updatedFish;
+        // 3. Push changes in state
+        this.setState({ fishes });
+    }
+
     addToOrder = (key) => {
         // 1. Create copy of state
         const order = { ...this.state.order };
@@ -79,7 +88,7 @@ class App extends Component {
                     </ul>
                 </div>
                 <Order fishes={this.state.fishes} order={this.state.order} />
-                <Inventory fishes={this.state.fishes} addFishes={this.addFishes} loadFishes={this.loadFishes} />
+                <Inventory fishes={this.state.fishes} addFishes={this.addFishes} loadFishes={this.loadFishes} updateFish={this.updateFish} />
             </div>
         );
     }

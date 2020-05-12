@@ -19,6 +19,14 @@ class Inventory extends Component {
         fishes: PropTypes.object
     }
 
+    componentDidMount() {
+        firebaseApp.auth().onAuthStateChanged(user => {
+            if(user) {
+                this.authHandler({user});
+            }
+        })
+    }
+
     authHandler = async authData => {
         // 1. Look for the owner
         const storeData = await base.fetch(this.props.storeId, { context: this });
@@ -40,7 +48,16 @@ class Inventory extends Component {
         firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
     }
 
+    logout = async () => {
+        firebaseApp.auth().signOut();
+        this.setState({
+            uid: null
+        })
+    }
+
     render() {
+
+        const logoutBtn = <button onClick={this.logout}>Logout!</button>
 
         if (!this.state.uid) {
             return <Login authenticate={this.authenticate} />;
@@ -49,6 +66,8 @@ class Inventory extends Component {
         if (this.state.uid !== this.state.owner) {
             return (
                 <div>
+                    <span>{logoutBtn}</span>
+                    <br />
                     <p style={{ textAlign: "center" }}>Sorry! You are not the owner of this Store!</p>
                 </div>
             )
@@ -57,6 +76,9 @@ class Inventory extends Component {
         return (
             <div className="inventory">
                 <h2>Inventory</h2>
+                <span>{logoutBtn}</span>
+                <br />
+                <br />
                 {Object.keys(this.props.fishes).map(key => <EditFishForm key={key} index={key} fish={this.props.fishes[key]} updateFish={this.props.updateFish} deleteFish={this.props.deleteFish} />)}
                 <AddFishForm addFishes={this.props.addFishes} />
                 <button onClick={this.props.loadFishes}>Load Sample Fishes</button>
